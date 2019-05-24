@@ -5,7 +5,8 @@ import sys
 class DoorLock:
 	def __init__(self):
 		self.delay_period = 0.01
-		
+		self.open = False
+
 		# use 'GPIO naming'
 		wiringpi.wiringPiSetupGpio()
 
