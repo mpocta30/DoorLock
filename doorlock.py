@@ -1,16 +1,11 @@
-from bt_proximity import BluetoothRSSI
-import time
 import wiringpi
 import time
 import sys
 
 class DoorLock:
 	def __init__(self):
-		self.rssi = -10
-		self.open = False
-		self.btaddr = 'D0:25:98:E3:79:37'
 		self.delay_period = 0.01
-
+		
 		# use 'GPIO naming'
 		wiringpi.wiringPiSetupGpio()
 
@@ -28,24 +23,3 @@ class DoorLock:
 		for pulse in range(lower, upper, step):
 			wiringpi.pwmWrite(18, pulse)
 			time.sleep(self.delay_period)
-
-
-if __name__ == '__main__':
-	# Create item of type DoorLock
-	lock = DoorLock()
-
-	try:
-		while True:
-			btrssi = BluetoothRSSI(addr=lock.btaddr)
-			lock.rssi = btrssi.get_rssi()
-
-			# If door is locked and phone comes close to lock
-			if not lock.open and lock.rssi != None:
-				lock.moveServo(50, 250, 1)
-				lock.open = True
-			elif lock.open and lock.rssi == None:
-				lock.moveServo(250, 50, -1)
-				lock.open = False
-	except:
-		print("\nThanks for trying our Lock!")
-	
