@@ -9,7 +9,6 @@ class DoorLock:
 		self.rssi = -10
 		self.open = False
 		self.btaddr = 'D0:25:98:E3:79:37'
-		self.btrssi = BluetoothRSSI(addr=self.btaddr)
 		self.delay_period = 0.01
 
 		# use 'GPIO naming'
@@ -37,7 +36,8 @@ if __name__ == '__main__':
 
 	try:
 		while True:
-			lock.rssi = lock.btrssi.get_rssi()
+			btrssi = BluetoothRSSI(addr=self.btaddr)
+			lock.rssi = btrssi.get_rssi()
 			print(lock.rssi)
 
 			# If door is locked and phone comes close to lock
