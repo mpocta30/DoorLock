@@ -39,7 +39,7 @@ def tracker():
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
     try:
-        app.run(debug=True, host='0.0.0.0')
+        app.run(debug=True, host='0.0.0.0', port=1024)
     except:
         print("\nThanks for trying our Lock!")
 
