@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, make_response
 from math import sqrt
 from doorlock import DoorLock
 import pprint
@@ -34,7 +34,7 @@ def tracker():
         lock.moveServo(100, 200, 1)
         lock.open = False
     
-    return 200
+    return make_response("Success", 201)
 
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
