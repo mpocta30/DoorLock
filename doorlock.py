@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
 	try:
 		while True:
-			btrssi = BluetoothRSSI(addr=self.btaddr)
+			btrssi = BluetoothRSSI(addr=lock.btaddr)
 			lock.rssi = btrssi.get_rssi()
 			print(lock.rssi)
 
