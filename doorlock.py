@@ -38,7 +38,6 @@ if __name__ == '__main__':
 		while True:
 			btrssi = BluetoothRSSI(addr=lock.btaddr)
 			lock.rssi = btrssi.get_rssi()
-			print(lock.rssi)
 
 			# If door is locked and phone comes close to lock
 			if not lock.open and lock.rssi != None:
