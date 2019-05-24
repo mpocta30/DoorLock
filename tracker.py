@@ -12,6 +12,9 @@ first_lon = -77.39275739218024
 # Global Lock class variable
 lock = DoorLock()
 
+@app.route('/',)
+def home():
+    return 'Hello world?'
 
 @app.route('/tracker', methods=['POST'])
 def tracker():
