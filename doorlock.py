@@ -47,5 +47,5 @@ if __name__ == '__main__':
 				lock.moveServo(250, 50, -1)
 				lock.open = False
 	except:
-		print("Thanks for trying our Lock!")
+		print("\nThanks for trying our Lock!")
 	
