@@ -40,10 +40,10 @@ if __name__ == '__main__':
 			lock.rssi = lock.btrssi.get_rssi()
 
 			# If door is locked and phone comes close to lock
-			if not lock.open and lock.rssi >= 0:
+			if not lock.open and lock.rssi != None:
 				lock.moveServo(50, 250, 1)
 				lock.open = True
-			elif lock.open and lock.rssi < 0:
+			elif lock.open and lock.rssi == None:
 				lock.moveServo(250, 50, -1)
 				lock.open = False
 	except:
