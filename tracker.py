@@ -24,6 +24,7 @@ def tracker():
     longitude = coordinates[0]
 
     distance = sqrt((latitude - first_lat)**2 + (longitude - first_lon)**2)
+    print(distance)
 
     # If door is locked and phone comes close to lock
     if not lock.open and distance <= 10:
