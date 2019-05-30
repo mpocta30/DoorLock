@@ -28,7 +28,9 @@ class OpenDoor(Resource):
             lock.moveServo(200, 100, -1)
             lock.open = True
         
-        return make_response("Open!", 201)
+            return make_response("Open!", 201)
+        else:
+            return make_response("Door is already open!", 503)
 
 
 class CloseDoor(Resource):
@@ -40,7 +42,9 @@ class CloseDoor(Resource):
             lock.moveServo(100, 200, 1)
             lock.open = False
 
-        return make_response("Closed!", 201)
+            return make_response("Closed!", 201)
+        else:
+            return make_response("Door is already closed!", 503)
 
 
 
@@ -55,7 +59,7 @@ lock = DoorLock()
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
     try:
-        app.run(debug=True, host='0.0.0.0', port=1024)
+        app.run(debug=False, host='0.0.0.0', port=1024)
     except:
         print("\nThanks for trying our Lock!")
 
