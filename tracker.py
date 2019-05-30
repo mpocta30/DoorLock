@@ -8,7 +8,7 @@ api = Api(app, prefix="/tracker")
 auth = HTTPBasicAuth()
 
 USER_DATA = {
-    "admin": "SuperSecretPwd"
+    "mpocta30": "Unl0ck@P0ct@3012!"
 }
 
 @auth.verify_password
