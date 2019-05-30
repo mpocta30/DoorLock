@@ -12,6 +12,7 @@ USER_DATA = {
 }
 
 
+<<<<<<< HEAD
 @auth.verify_password
 def verify(username, password):
     if not (username and password):
@@ -30,6 +31,8 @@ class OpenDoor(Resource):
             lock.open = True
         
         return make_response("Open!", 201)
+=======
+>>>>>>> 53b1f7fc1eaae7f0593983bb921f89316e268e2c
 
 class CloseDoor(Resource):
     @auth.login_required
@@ -55,7 +58,7 @@ lock = DoorLock()
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
     try:
-        app.run(debug=True, host='0.0.0.0')
+        app.run(debug=True, host='0.0.0.0', port=1024)
     except:
         print("\nThanks for trying our Lock!")
 
