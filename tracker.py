@@ -1,40 +1,56 @@
-from flask import Flask, request, make_response
-from math import sqrt
 from doorlock import DoorLock
-import pprint
+from flask import Flask, request, make_response
+from flask_restful import Resource, Api
+from flask_httpauth import HTTPBasicAuth
 
-# Create the application instance
 app = Flask(__name__)
+api = Api(app, prefix="/tracker")
+auth = HTTPBasicAuth()
 
-first_lat = 37.70441666932894
-first_lon = -77.39275739218024
+USER_DATA = {
+    "admin": "SuperSecretPwd"
+}
+
+
+@auth.verify_password
+def verify(username, password):
+    if not (username and password):
+        return False
+    return USER_DATA.get(username) == password
+
+
+class OpenDoor(Resource):
+    @auth.login_required
+    def post(self):
+        global lock
+
+        # If door is locked and phone comes close to lock
+        if not lock.open:
+            lock.moveServo(200, 100, -1)
+            lock.open = True
+        
+        return make_response("Open!", 201)
+
+class CloseDoor(Resource):
+    @auth.login_required
+    def post(self):
+        global lock
+
+        if lock.open:
+            lock.moveServo(100, 200, 1)
+            lock.open = False
+
+        return make_response("Closed!", 201)
+
+
+
+api.add_resource(OpenDoor, '/open')
+api.add_resource(CloseDoor, '/close')
+
 
 # Global Lock class variable
 lock = DoorLock()
 
-
-@app.route('/tracker', methods=['POST'])
-def tracker():
-    global lock
-
-    content = request.json
-    coordinates = content['locations'][0]['geometry']['coordinates']
-
-    latitude = coordinates[1]
-    longitude = coordinates[0]
-
-    distance = sqrt((latitude - first_lat)**2 + (longitude - first_lon)**2)
-    print(distance)
-
-    # If door is locked and phone comes close to lock
-    if not lock.open and distance <= 10:
-        lock.moveServo(200, 100, -1)
-        lock.open = True
-    elif lock.open and distance > 10:
-        lock.moveServo(100, 200, 1)
-        lock.open = False
-    
-    return make_response("Success", 201)
 
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
